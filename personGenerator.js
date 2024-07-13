@@ -1,4 +1,4 @@
-        const personGenerator = {
+const personGenerator = {
     surnameJson: `{  
         "count": 15,
         "list": {   
@@ -38,7 +38,7 @@
         }
     }`,
 
-    
+
     FemalefirstNameMaleJson: `{
         "count": 10,
         "list": {     
@@ -87,78 +87,122 @@
         }
     }`,
 
+    months: [
+        "Января",
+        "Февраля",
+        "Марта",
+        "Апреля",
+        "Мая",
+        "Июня",
+        "Июля",
+        "Августа",
+        "Сентября",
+        "Октября",
+        "Ноября",
+        "Декаря"
+    ],
+
     GENDER_MALE: 'Мужчина',
     GENDER_FEMALE: 'Женщина',
 
     randomIntNumber: (max = 1, min = 0) => Math.floor(Math.random() * (max - min + 1) + min),
-    
-    
+
+
 
     randomValue: function (json) {
         const obj = JSON.parse(json);
-        const prop = `id_${this.randomIntNumber(obj.count, 1)}`;  
-      // console.log(obj.list[prop])
+        const prop = `id_${this.randomIntNumber(obj.count, 1)}`;
+        console.log(obj.list[prop])
         return obj.list[prop];
     },
-    
-    
 
-    randomFirstName: function() {
+
+
+    randomFirstName: function () {
         let resultGender = this.person.gender;
-        if(resultGender === 'Мужчина'){
-             result = this.randomValue(this.firstNameMaleJson);
-             }else{
-                result = this.randomValue(this.FemalefirstNameMaleJson)
-             } 
+         if(resultGender === 'Мужчина'){
+          result = this.randomValue(this.firstNameMaleJson);
+          }else{
+        result = this.randomValue(this.FemalefirstNameMaleJson)
+         } 
 
-        return result;    
-
-    },
-    
-
-
-     randomSurname: function() {
-        let personFirstName = this.person.firstName;
-        //let obje = JSON.parse(this.firstNameMaleJson).list['id_3'];
-        console.log(this.person.gender);
-         if(this.person.gender === "Мужчина"){
-            result =  this.randomValue(this.surnameJson)
-         }else{
-            result = `${this.randomValue(this.surnameJson)}а`
-         }
-        
-        
         return result;
-        
+
     },
-    
-    
-    randomGender: function() {
-        
+
+    randomSurname: function () {
+        let personFirstName = this.person.firstName
+        if (this.person.gender === "Мужчина") {
+            result = this.randomValue(this.surnameJson)
+        } else {
+            result = `${this.randomValue(this.surnameJson)}а`
+        }
+
+        return result;
+
+    },
+
+    randomGender: function () {
         let gender = Math.round(Math.random() * 1)
         return gender === 0 ? this.GENDER_MALE : this.GENDER_FEMALE;
-        
     },
 
-    randomYear: function(){
+    randomYear: function () {
         return this.randomIntNumber(1985, 2010);
-        
-
     },
-   
 
-  
-     randomProfession: function(){
-         if(this.person.gender === this.GENDER_MALE){
+    randomProfession: function () {
+        if (this.person.gender === this.GENDER_MALE) {
             result = this.randomValue(this.professionMaleJson)
-         }else{
-             result = this.randomValue(this.professionFemaleJson)
-         }
-         return result
+        } else {
+            result = this.randomValue(this.professionFemaleJson)
+        }
+        return result
     },
 
-    
- 
+    randomPatronymicName: function () {
+        let name = this.randomValue(this.firstNameMaleJson);
+        console.log(name.slice(-1));
+        if (this.person.gender == "Мужчина") {
+            if (name.slice(-1) == "й") { name = name.replace("й", "е") }
+            if (name.slice(-1) == "р") { name = name.replace("р", "ро") }
+            if (name.slice(-1) == "м") { name = name.replace("м", "мо") }
+            if (name.slice(-1) == "н") { name = name.replace("н", "но") }
+            if (name.slice(-1) == "а") { name = name.replace("а", "о") }
+            if (name.slice(-3) == "иил") { name = name.replace("иил", "ило") }
+            if (name.slice(-3) == "аил") { name = name.replace("аил", "айло") }
+
+            result = name + 'вич';
+        } else {
+            if (name.slice(-1) == "й") { name = name.replace("й", "е") }
+            if (name.slice(-1) == "а") { name = name.replace("а", "о") }
+            if (name.slice(-1) == "р") { name = name.replace("р", "ро") }
+            if (name.slice(-1) == "м") { name = name.replace("м", "мо") }
+            if (name.slice(-2) == "ан") {name = name.replace("ан", "ано")}
+            if (name.slice(-3) == "иил") { name = name.replace("иил", "ило") }
+            if (name.slice(-1) == "г") { name = name.replace("г", "го") }
+            if (name.slice(-3) == "аил") { name = name.replace("аил", "айло") }
+            result = name + 'вна';
+        }
+        return result
+    },
+
+    randomData: function () {
+        let monthInt = this.randomIntNumber(0, 11);
+        
+        let month = this.months[monthInt];
+        if ((month === "Апреля") || (month === "Июня") || (month === "Сентября") || (month === "Ноября")) {
+            result = this.randomIntNumber(1, 30) + " " + month;
+        } else {
+            if (month === "Февраля") {
+                result = this.randomIntNumber(1, 28) + " " + month;
+            } else {
+                result = this.randomIntNumber(1, 31) + " " + month;
+            }
+        }
+        return result;
+    },
+
     getPerson: function () {
         this.person = {};
         this.person.gender = this.randomGender();
@@ -166,9 +210,10 @@
         this.person.surname = this.randomSurname();
         this.person.year = this.randomYear();
         this.person.profession = this.randomProfession();
+        this.person.patronomic = this.randomPatronymicName();
 
-        
-        return this.person ; 
+        return this.person;
     }
-    
+
 }
+

@@ -4,7 +4,6 @@ BODY{
 
 .card-body{
     font-family: 'Share Tech Mono', monospace;
-    /* background-color: rgba(91, 152, 187, 0.507); */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -20,4 +19,21 @@ BODY{
    
      background-color: rgba(15, 17, 16, 0.596);
     color: rgb(255, 255, 255); 
+}
+
+.generate{
+border-radius: 30px;
+background-color: rgba(130, 184, 49, 0.493);
+font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+border: none;
+
+}
+
+.clear{
+    border-radius: 30px;
+    background-color: rgba(224, 5, 5, 0.527);
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    border: none;
+
+
 }
