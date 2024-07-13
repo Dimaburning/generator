@@ -112,7 +112,6 @@ const personGenerator = {
     randomValue: function (json) {
         const obj = JSON.parse(json);
         const prop = `id_${this.randomIntNumber(obj.count, 1)}`;
-        console.log(obj.list[prop])
         return obj.list[prop];
     },
 
@@ -162,7 +161,6 @@ const personGenerator = {
 
     randomPatronymicName: function () {
         let name = this.randomValue(this.firstNameMaleJson);
-        console.log(name.slice(-1));
         if (this.person.gender == "Мужчина") {
             if (name.slice(-1) == "й") { name = name.replace("й", "е") }
             if (name.slice(-1) == "р") { name = name.replace("р", "ро") }
@@ -171,7 +169,6 @@ const personGenerator = {
             if (name.slice(-1) == "а") { name = name.replace("а", "о") }
             if (name.slice(-3) == "иил") { name = name.replace("иил", "ило") }
             if (name.slice(-3) == "аил") { name = name.replace("аил", "айло") }
-
             result = name + 'вич';
         } else {
             if (name.slice(-1) == "й") { name = name.replace("й", "е") }
@@ -201,6 +198,7 @@ const personGenerator = {
             }
         }
         return result;
+        
     },
 
     getPerson: function () {
@@ -211,6 +209,8 @@ const personGenerator = {
         this.person.year = this.randomYear();
         this.person.profession = this.randomProfession();
         this.person.patronomic = this.randomPatronymicName();
+        this.person.data = this.randomData();
+        console.log(this.person.randomData)
 
         return this.person;
     }
